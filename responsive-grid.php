@@ -39,6 +39,9 @@ function responsive_grid_text_domain() {
 
 if ( ! function_exists( 'rg_shortcodes_register_shortcode' ) ) {
 	add_action( 'init', 'rg_shortcodes_register_shortcode' );
+	/*
+	 * Declare our shortcode
+	 */
 	function rg_shortcodes_register_shortcode() {
 		add_shortcode( 'rg_column', 'rg_columns_shortcode' );
 	}
@@ -177,5 +180,20 @@ if ( ! function_exists( 'rg_columns_helper' ) ) {
 	    );
 
 	    return strtr( $content, $array );
+	}
+}
+
+if ( ! function_exists( 'rg_ie_compatibility' ) ) {
+	add_action( 'wp_head', 'rg_ie_compatibility' );
+	/**
+	 * Add compatibility for IE8 and lower
+	 * @since 0.3
+	 */
+	function rg_ie_compatibility() {
+	?>
+		<!--[if lt IE 9]>
+			<link rel="stylesheet" href="<?php echo plugins_url('/css/ie.min.css', __FILE__); ?>" />
+		<![endif]-->
+	<?php
 	}
 }
