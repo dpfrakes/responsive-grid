@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Responsive Grid
- * Plugin URI:        https://github.com/natgeosociety/
+ * Plugin URI:        https://github.com/dpfrakes/responsive-grid/
  * Description:       Simple responsive grid layout for Visual Editor.
  * Version:           1.0.0
  * Author:            Dan Frakes
