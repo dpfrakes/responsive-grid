@@ -40,7 +40,7 @@ function responsive_grid_text_domain() {
 if ( ! function_exists( 'rg_shortcodes_register_shortcode' ) ) {
 	add_action( 'init', 'rg_shortcodes_register_shortcode' );
 	/*
-	 * Declare our shortcode
+	 * Declare shortcode
 	 */
 	function rg_shortcodes_register_shortcode() {
 		add_shortcode( 'rg_column', 'rg_columns_shortcode' );
@@ -50,7 +50,7 @@ if ( ! function_exists( 'rg_shortcodes_register_shortcode' ) ) {
 if ( ! function_exists( 'rg_add_shortcode_button' ) ) {
 	add_action( 'admin_init', 'rg_add_shortcode_button' );
 	/*
-	 * Set it up so we can register our TinyMCE button
+	 * Set it up so we can register TinyMCE button
 	 */
 	function rg_add_shortcode_button() {
 		// check user permissions
@@ -68,7 +68,7 @@ if ( ! function_exists( 'rg_add_shortcode_button' ) ) {
 
 if ( ! function_exists( 'rg_shortcodes_add_tinymce_plugin' ) ) {
 	/*
-	 * Register our tinyMCE button javascript
+	 * Register tinyMCE button javascript
 	 */
 	function rg_shortcodes_add_tinymce_plugin( $plugin_array ) {
 		$plugin_array['rg_shortcodes_button'] = plugins_url( '/js/button.js', __FILE__ );
@@ -78,7 +78,7 @@ if ( ! function_exists( 'rg_shortcodes_add_tinymce_plugin' ) ) {
 
 if ( ! function_exists( 'rg_shortcodes_register_button' ) ) {
 	/*
-	 * Register our TinyMCE button
+	 * Register TinyMCE button
 	 */
 	function rg_shortcodes_register_button( $buttons ) {
 		array_push( $buttons, 'rg_shortcodes_button' );
@@ -94,7 +94,7 @@ if ( ! function_exists( 'rg_translatable_strings' ) ) {
 	function rg_translatable_strings() {
 		?>
 		<script type="text/javascript">
-			var rg_add_columns = '<?php esc_html_e( 'Add columns', 'lightweight-grid-columns' ); ?>';
+			var rg_add_columns = '<?php esc_html_e( 'Insert grid', 'lightweight-grid-columns' ); ?>';
 			var rg_columns = '<?php esc_html_e( 'Columns', 'lightweight-grid-columns' ); ?>';
 			var rg_desktop = '<?php esc_html_e( 'Desktop grid percentage', 'lightweight-grid-columns' ); ?>';
 			var rg_tablet = '<?php esc_html_e( 'Tablet grid percentage', 'lightweight-grid-columns' ); ?>';
@@ -109,7 +109,7 @@ if ( ! function_exists( 'rg_translatable_strings' ) ) {
 if ( ! function_exists( 'rg_shortcodes_admin_css' ) ) {
 	add_action( 'admin_enqueue_scripts', 'rg_shortcodes_admin_css' );
 	/*
-	 * Add our admin CSS
+	 * Add admin CSS
 	 */
 	function rg_shortcodes_admin_css() {
 		wp_enqueue_style( 'rg-columns-admin', plugins_url('/css/admin.css', __FILE__) );
