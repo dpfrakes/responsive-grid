@@ -94,13 +94,13 @@ if ( ! function_exists( 'rg_translatable_strings' ) ) {
 	function rg_translatable_strings() {
 		?>
 		<script type="text/javascript">
-			var rg_add_columns = '<?php esc_html_e( 'Insert grid', 'lightweight-grid-columns' ); ?>';
-			var rg_columns = '<?php esc_html_e( 'Columns', 'lightweight-grid-columns' ); ?>';
-			var rg_desktop = '<?php esc_html_e( 'Desktop grid percentage', 'lightweight-grid-columns' ); ?>';
-			var rg_tablet = '<?php esc_html_e( 'Tablet grid percentage', 'lightweight-grid-columns' ); ?>';
-			var rg_mobile = '<?php esc_html_e( 'Mobile grid percentage', 'lightweight-grid-columns' ); ?>';
-			var rg_content = '<?php esc_html_e( 'Content', 'lightweight-grid-columns' ); ?>';
-			var rg_last = '<?php esc_html_e( 'Last column in row?', 'lightweight-grid-columns' ); ?>';
+			var rg_add_columns = '<?php esc_html_e( 'Insert grid', 'responsive-grid' ); ?>';
+			var rg_columns = '<?php esc_html_e( 'Columns', 'responsive-grid' ); ?>';
+			var rg_desktop = '<?php esc_html_e( 'Desktop grid percentage', 'responsive-grid' ); ?>';
+			var rg_tablet = '<?php esc_html_e( 'Tablet grid percentage', 'responsive-grid' ); ?>';
+			var rg_mobile = '<?php esc_html_e( 'Mobile grid percentage', 'responsive-grid' ); ?>';
+			// var rg_content = '<?php esc_html_e( 'Content', 'responsive-grid' ); ?>';
+			var rg_last = '<?php esc_html_e( 'Last column in row?', 'responsive-grid' ); ?>';
 		</script>
 		<?php
 	}
@@ -122,8 +122,8 @@ if ( ! function_exists( 'rg_shortcodes_css' ) ) {
 	 * Add the unsemantic framework
 	 */
 	function rg_shortcodes_css() {
-		wp_enqueue_style( 'rg-unsemantic-grid-responsive-tablet', plugins_url('/css/unsemantic-grid-responsive-tablet.css', __FILE__), array(), rg_VERSION, 'all' );
-		wp_register_script( 'rg-matchHeight', plugins_url('/js/jquery.matchHeight-min.js', __FILE__), array( 'jquery' ), rg_VERSION, true );
+		wp_enqueue_style( 'rg-unsemantic-grid-responsive-tablet', plugins_url('/css/unsemantic-grid-responsive-tablet.css', __FILE__), array(), RG_VERSION, 'all' );
+		// wp_register_script( 'rg-matchHeight', plugins_url('/js/jquery.matchHeight-min.js', __FILE__), array( 'jquery' ), RG_VERSION, true );
 	}
 }
 
@@ -134,27 +134,27 @@ if ( ! function_exists( 'rg_columns_shortcode' ) ) {
 	function rg_columns_shortcode( $atts , $content = null ) {
 		extract( shortcode_atts(
 			array(
-				'grid' => '50',
-				'tablet_grid' => '50',
-				'mobile_grid' => '100',
+				'desktop_grid' => '6',
+				'tablet_grid' => '6',
+				'mobile_grid' => '12',
 				'last' => '',
 				'class' => '',
 				'style' => '',
-				'equal_heights' => 'true',
+				// 'equal_heights' => 'true',
 				'id' => ''
 			), $atts )
 		);
 
-		if ( 'true' == $equal_heights ) {
-			wp_enqueue_script( 'rg-matchHeight' );
-		}
+		// if ( 'true' == $equal_heights ) {
+		// 	wp_enqueue_script( 'rg-matchHeight' );
+		// }
 
 		$content = sprintf(
-			'<div %9$s class="rg-column rg-grid-parent %1$s %2$s %3$s %4$s %5$s"><div %6$s class="inside-grid-column">%7$s</div></div>%8$s',
-			'rg-grid-' . intval( $grid ),
-			'rg-tablet-grid-' . intval( $tablet_grid ),
-			'rg-mobile-grid-' . intval( $mobile_grid ),
-			( 'true' == $equal_heights ) ? 'rg-equal-heights' : '',
+			'<div %8$s class="rg-column rg-grid-parent %1$s %2$s %3$s %4$s"><div %5$s class="rg-cell">%6$s</div></div>%7$s',
+			'col-md-' . intval( $desktop_grid ),
+			'col-sm-' . intval( $tablet_grid ),
+			'col-xs-' . intval( $mobile_grid ),
+			// ( 'true' == $equal_heights ) ? 'rg-equal-heights' : '',
 			esc_attr( $class ),
 			( '' !== $style ) ? ' style="' . esc_attr( $style ) . '"' : '',
 			do_shortcode( $content ),
@@ -162,7 +162,7 @@ if ( ! function_exists( 'rg_columns_shortcode' ) ) {
 			( '' !== $id ) ? 'id="' . esc_attr( $id ) . '"' : ''
 		);
 
-		return force_balance_tags( $content );
+		return $content;
 	}
 }
 

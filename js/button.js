@@ -26,35 +26,81 @@
             type: 'listbox',
             name: 'desktop_grid',
             label: rg_desktop,
-            'values': colValues
+            values: colValues
           }, {
             type: 'listbox',
             name: 'tablet_grid',
             label: rg_tablet,
-            'values': colValues
+            values: colValues
           }, {
             type: 'listbox',
             name: 'mobile_grid',
             label: rg_mobile,
-            'values': colValues
-          }, {
-            type: 'textbox',
-            name: 'content',
-            label: rg_content,
-            multiline: true,
-            minWidth: 300,
-            minHeight: 100,
-          }, {
-            type: 'checkbox',
-            name: 'last',
-            label: rg_last
+            values: colValues
           }],
           onsubmit: function(e) {
-            editor.insertContent( '[rg_grid desktop_grid="' + e.data.desktop_grid + '" tablet_grid="' + e.data.tablet_grid +
-              '" mobile_grid="' + e.data.mobile_grid + '" last="' + e.data.last + '"]' + e.data.content + '[/rg_grid]');
+            editor.insertContent( '[rg_column desktop_grid="' + e.data.desktop_grid + '" tablet_grid="' + e.data.tablet_grid +
+              '" mobile_grid="' + e.data.mobile_grid + '"');
           }
         });
       }
     });
+
+    function html(desktop, tablet, mobile) {
+      return '<div class="' +
+        (!!desktop ? 'col-md-' + desktop + ' ': '') +
+        (!!tablet ? 'col-sm-' + tablet + ' ' : '') +
+        (!!mobile ? 'col-xs-' + mobile : '') + '"><span class="grid-inner"></span></div>';
+    }
+
+    function replaceGridShortcodes(content) {
+      return content.replace(/\[rg_column([^\]]*)\]/g, function(shortcodeStr) {
+        var desktop = shortcodeStr.match(/desktop_grid="([^"]*)"/)[1];
+        var tablet = shortcodeStr.match(/tablet_grid="([^"]*)"/)[1];
+        var mobile = shortcodeStr.match(/mobile_grid="([^"]*)"/)[1];
+        return html(desktop, tablet, mobile);
+      });
+    }
+
+    function restoreMediaShortcodes(content) {
+      function getAttr(str, name) {
+        name = new RegExp(name + '=\"([^\"]+)\"').exec(str);
+        return name ? window.decodeURIComponent(name[1]) : '';
+      }
+
+      return content.replace(/rg_column/g, function(match, gridCol) {
+        var data = getAttr(gridCol, 'desktop_grid');
+        console.warn('desktop_grid attr val...');
+        console.log(data);
+
+        if (data) {
+          return '<h3>' + data + '</h3>';
+        }
+
+        return match;
+      });
+    }
+
+    editor.on('BeforeSetContent', function(event) {
+      console.warn('BeforeSetContent');
+      // console.log(editor.plugins.wpview);
+      // console.log(typeof wp);
+      // console.log(wp.mce);
+      console.log(event);
+
+      // if (!editor.plugins.wpview || typeof wp === 'undefined' || !wp.mce) {
+        event.content = replaceGridShortcodes(event.content);
+      // }
+    });
+
+    // editor.on('PostProcess', function(event) {
+    //   console.warn('PostProcess');
+    //   console.log(event.get);
+
+    //   if (event.get) {
+    //     event.content = restoreMediaShortcodes(event.content);
+    //   }
+    // });
+
   });
 })();
