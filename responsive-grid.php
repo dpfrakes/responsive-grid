@@ -8,7 +8,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://www.dpfrakes.net/
+ * @link              https://github.com/dpfrakes/responsive-grid/
  * @since             1.0.0
  * @package           Responsive_Grid
  *
@@ -31,7 +31,7 @@ add_action( 'plugins_loaded', 'responsive_grid_text_domain' );
 /**
  * Load plugin textdomain.
  *
- * @since 0.1
+ * @since 1.0
  */
 function responsive_grid_text_domain() {
 	load_plugin_textdomain( 'responsive-grid' );
@@ -114,17 +114,6 @@ if ( ! function_exists( 'rg_shortcodes_admin_css' ) ) {
 	}
 }
 
-if ( ! function_exists( 'rg_shortcodes_css' ) ) {
-	add_action( 'wp_enqueue_scripts', 'rg_shortcodes_css', 99 );
-	/*
-	 * Add the unsemantic framework
-	 */
-	function rg_shortcodes_css() {
-		wp_enqueue_style( 'rg-unsemantic-grid-responsive-tablet', plugins_url('/css/unsemantic-grid-responsive-tablet.css', __FILE__), array(), RG_VERSION, 'all' );
-		// wp_register_script( 'rg-matchHeight', plugins_url('/js/jquery.matchHeight-min.js', __FILE__), array( 'jquery' ), RG_VERSION, true );
-	}
-}
-
 if ( ! function_exists( 'rg_columns_shortcode' ) ) {
 	/*
 	 * Create the output of the columns shortcode
@@ -139,21 +128,15 @@ if ( ! function_exists( 'rg_columns_shortcode' ) ) {
 				'last' => '',
 				'class' => '',
 				'style' => '',
-				// 'equal_heights' => 'true',
 				'id' => ''
 			), $atts )
 		);
-
-		// if ( 'true' == $equal_heights ) {
-		// 	wp_enqueue_script( 'rg-matchHeight' );
-		// }
 
 		$content = sprintf(
 			'<div %8$s class="rg-column rg-grid-parent %1$s %2$s %3$s %4$s"><div %5$s class="rg-cell">%6$s</div></div>%7$s',
 			'col-md-' . intval( $desktop_grid ),
 			'col-sm-' . intval( $tablet_grid ),
 			'col-xs-' . intval( $mobile_grid ),
-			// ( 'true' == $equal_heights ) ? 'rg-equal-heights' : '',
 			esc_attr( $class ),
 			( '' !== $style ) ? ' style="' . esc_attr( $style ) . '"' : '',
 			do_shortcode( $content ),
@@ -179,20 +162,5 @@ if ( ! function_exists( 'rg_columns_helper' ) ) {
 	    );
 
 	    return strtr( $content, $array );
-	}
-}
-
-if ( ! function_exists( 'rg_ie_compatibility' ) ) {
-	add_action( 'wp_head', 'rg_ie_compatibility' );
-	/**
-	 * Add compatibility for IE8 and lower
-	 * @since 0.3
-	 */
-	function rg_ie_compatibility() {
-	?>
-		<!--[if lt IE 9]>
-			<link rel="stylesheet" href="<?php echo plugins_url('/css/ie.min.css', __FILE__); ?>" />
-		<![endif]-->
-	<?php
 	}
 }

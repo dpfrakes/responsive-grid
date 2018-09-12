@@ -4,15 +4,15 @@
     {text: 'Full width', value: '12'},
     {text: '1/2 width', value: '6'},
     {text: '1/3 width', value: '4'},
-    {text: '2/3 width', value: '8'},
+    // {text: '2/3 width', value: '8'},
     {text: '1/4 width', value: '3'},
-    {text: '3/4 width', value: '9'},
-    {text: '1/6 width', value: '2'},
-    {text: '5/6 width', value: '10'},
-    {text: '1/12 width', value: '1'},
-    {text: '5/12 width', value: '5'},
-    {text: '7/12 width', value: '7'},
-    {text: '11/12 width', value: '11'}
+    // {text: '3/4 width', value: '9'},
+    // {text: '1/6 width', value: '2'},
+    // {text: '5/6 width', value: '10'},
+    // {text: '1/12 width', value: '1'},
+    // {text: '5/12 width', value: '5'},
+    // {text: '7/12 width', value: '7'},
+    // {text: '11/12 width', value: '11'}
   ];
 
   tinymce.PluginManager.add('rg_shortcodes_button', function( editor, url ) {
