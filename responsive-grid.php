@@ -94,13 +94,11 @@ if ( ! function_exists( 'rg_translatable_strings' ) ) {
 	function rg_translatable_strings() {
 		?>
 		<script type="text/javascript">
-			var rg_add_columns = '<?php esc_html_e( 'Insert grid', 'responsive-grid' ); ?>';
-			var rg_columns = '<?php esc_html_e( 'Columns', 'responsive-grid' ); ?>';
+			var rg_insert_grid = '<?php esc_html_e( 'Insert grid', 'responsive-grid' ); ?>';
+			var rg_num_cols = '<?php esc_html_e( '# of Columns', 'responsive-grid' ); ?>';
 			var rg_desktop = '<?php esc_html_e( 'Desktop grid percentage', 'responsive-grid' ); ?>';
 			var rg_tablet = '<?php esc_html_e( 'Tablet grid percentage', 'responsive-grid' ); ?>';
 			var rg_mobile = '<?php esc_html_e( 'Mobile grid percentage', 'responsive-grid' ); ?>';
-			// var rg_content = '<?php esc_html_e( 'Content', 'responsive-grid' ); ?>';
-			var rg_last = '<?php esc_html_e( 'Last column in row?', 'responsive-grid' ); ?>';
 		</script>
 		<?php
 	}
@@ -134,6 +132,7 @@ if ( ! function_exists( 'rg_columns_shortcode' ) ) {
 	function rg_columns_shortcode( $atts , $content = null ) {
 		extract( shortcode_atts(
 			array(
+				'num_cols' => '2',
 				'desktop_grid' => '6',
 				'tablet_grid' => '6',
 				'mobile_grid' => '12',

@@ -17,12 +17,16 @@
 
   tinymce.PluginManager.add('rg_shortcodes_button', function( editor, url ) {
     editor.addButton('rg_shortcodes_button', {
-      title: rg_add_columns,
+      title: rg_insert_grid,
       icon: 'icon dashicons-text',
       onclick: function() {
         editor.windowManager.open({
-          title: rg_columns,
+          title: rg_insert_grid,
           body: [{
+            type: 'textbox',
+            name: 'num_cols',
+            label: rg_num_cols
+          }, {
             type: 'listbox',
             name: 'desktop_grid',
             label: rg_desktop,
@@ -39,8 +43,12 @@
             values: colValues
           }],
           onsubmit: function(e) {
-            editor.insertContent( '[rg_column desktop_grid="' + e.data.desktop_grid + '" tablet_grid="' + e.data.tablet_grid +
-              '" mobile_grid="' + e.data.mobile_grid + '"');
+            htmlStr = '[rg_row]';
+            for (var c = 0; c < parseInt(e.data.num_cols); c++) {
+              htmlStr += '[rg_column desktop_grid="' + e.data.desktop_grid + '" tablet_grid="' + e.data.tablet_grid + '" mobile_grid="' + e.data.mobile_grid + '"]'
+            }
+            htmlStr += '[/rg_row]';
+            editor.insertContent(htmlStr);
           }
         });
       }
@@ -50,10 +58,15 @@
       return '<div class="' +
         (!!desktop ? 'col-md-' + desktop + ' ': '') +
         (!!tablet ? 'col-sm-' + tablet + ' ' : '') +
-        (!!mobile ? 'col-xs-' + mobile : '') + '"><span class="grid-inner"></span></div>';
+        (!!mobile ? 'col-xs-' + mobile : '') + '"><p></p></div>';
     }
 
     function replaceGridShortcodes(content) {
+      // Replace rows
+      content = content.replace(/\[rg_row\]/g, '<div class="rg-grid"><div class="row">');
+      content = content.replace(/\[\/rg_row\]/g, '</div></div>');
+
+      // Replace columns
       return content.replace(/\[rg_column([^\]]*)\]/g, function(shortcodeStr) {
         var desktop = shortcodeStr.match(/desktop_grid="([^"]*)"/)[1];
         var tablet = shortcodeStr.match(/tablet_grid="([^"]*)"/)[1];
