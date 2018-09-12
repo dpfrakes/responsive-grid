@@ -4,18 +4,10 @@
     {text: 'Full width', value: '12'},
     {text: '1/2 width', value: '6'},
     {text: '1/3 width', value: '4'},
-    // {text: '2/3 width', value: '8'},
-    {text: '1/4 width', value: '3'},
-    // {text: '3/4 width', value: '9'},
-    // {text: '1/6 width', value: '2'},
-    // {text: '5/6 width', value: '10'},
-    // {text: '1/12 width', value: '1'},
-    // {text: '5/12 width', value: '5'},
-    // {text: '7/12 width', value: '7'},
-    // {text: '11/12 width', value: '11'}
+    {text: '1/4 width', value: '3'}
   ];
 
-  tinymce.PluginManager.add('rg_shortcodes_button', function( editor, url ) {
+  tinymce.PluginManager.add('rg_shortcodes_button', function(editor, url) {
     editor.addButton('rg_shortcodes_button', {
       title: rg_insert_grid,
       icon: 'icon dashicons-text',
@@ -55,63 +47,65 @@
     });
 
     function html(desktop, tablet, mobile) {
-      return '<div class="' +
-        (!!desktop ? 'col-md-' + desktop + ' ': '') +
-        (!!tablet ? 'col-sm-' + tablet + ' ' : '') +
-        (!!mobile ? 'col-xs-' + mobile : '') + '"><p></p></div>';
+      return '<div class="rg-column' +
+        (!!desktop ? ' col-md-' + desktop : '') +
+        (!!tablet ? ' col-sm-' + tablet : '') +
+        (!!mobile ? ' col-xs-' + mobile : '') + '"><p>[insert text here]</p></div>';
     }
 
-    function replaceGridShortcodes(content) {
+    function shortcodeToHTML(content) {
       // Replace rows
-      content = content.replace(/\[rg_row\]/g, '<div class="rg-grid"><div class="row">');
-      content = content.replace(/\[\/rg_row\]/g, '</div></div>');
+      content = content.replace(/\[rg_row\]/g, '<div class="rg-grid"><div class="rg-row row">');
+      content = content.replace(/\[\/rg_row\]/g, '</div></div><!--.rg-grid-->');
 
       // Replace columns
-      return content.replace(/\[rg_column([^\]]*)\]/g, function(shortcodeStr) {
+      content = content.replace(/\[rg_column([^\]]*)\]/g, function(shortcodeStr) {
         var desktop = shortcodeStr.match(/desktop_grid="([^"]*)"/)[1];
         var tablet = shortcodeStr.match(/tablet_grid="([^"]*)"/)[1];
         var mobile = shortcodeStr.match(/mobile_grid="([^"]*)"/)[1];
         return html(desktop, tablet, mobile);
       });
+
+      // Return final html
+      return content;
     }
 
-    function restoreMediaShortcodes(content) {
-      function getAttr(str, name) {
-        name = new RegExp(name + '=\"([^\"]+)\"').exec(str);
-        return name ? window.decodeURIComponent(name[1]) : '';
-      }
+    // function htmlToShortcode(content) {
+    //   function getAttr(str, name) {
+    //     name = new RegExp(name + '=\"([^\"]+)\"').exec(str);
+    //     return name ? window.decodeURIComponent(name[1]) : '';
+    //   }
 
-      return content.replace(/rg_column/g, function(match, gridCol) {
-        var data = getAttr(gridCol, 'desktop_grid');
-        console.warn('desktop_grid attr val...');
-        console.log(data);
+    //   // Find .rg-grid .rg-row and replace with [rg_row]
+    //   content = content.replace(/\<div class=\"rg-grid\"\>\<div class=\"rg-row row\"\>/g, '[rg_row]');
+    //   content = content.replace(/\<\/div\>\<\/div\>\<!--\.rg-grid--\>/g, '[/rg_row]');
 
-        if (data) {
-          return '<h3>' + data + '</h3>';
-        }
+    //   // Find .rg-column, gather attributes, and store as shortcode
+    //   content = content.replace(/<div class="rg-column()">/)
 
-        return match;
-      });
-    }
+    //   return content.replace(/<div class="rg-column()">/g, function(match, gridCol) {
+    //     var data = getAttr(gridCol, 'desktop_grid');
+
+    //     if (data) {
+    //       return '<h3>' + data + '</h3>';
+    //     }
+
+    //     return match;
+    //   });
+    // }
 
     editor.on('BeforeSetContent', function(event) {
       console.warn('BeforeSetContent');
-      // console.log(editor.plugins.wpview);
-      // console.log(typeof wp);
-      // console.log(wp.mce);
       console.log(event);
 
       // if (!editor.plugins.wpview || typeof wp === 'undefined' || !wp.mce) {
-        event.content = replaceGridShortcodes(event.content);
+        event.content = shortcodeToHTML(event.content);
       // }
     });
 
     // editor.on('PostProcess', function(event) {
-    //   console.warn('PostProcess');
-    //   console.log(event.get);
-
     //   if (event.get) {
-    //     event.content = restoreMediaShortcodes(event.content);
+    //     event.content = htmlToShortcode(event.content);
     //   }
     // });
 

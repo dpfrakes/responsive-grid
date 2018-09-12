@@ -122,7 +122,7 @@ if ( ! function_exists( 'rg_columns_shortcode' ) ) {
 		extract( shortcode_atts(
 			array(
 				'num_cols' => '2',
-				'desktop_grid' => '6',
+				'desktop_grid' => '4',
 				'tablet_grid' => '6',
 				'mobile_grid' => '12',
 				'last' => '',
