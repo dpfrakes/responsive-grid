@@ -48,9 +48,9 @@
 
     function html(desktop, tablet, mobile) {
       return '<div class="rg-column' +
-        (!!desktop ? ' col-md-' + desktop : '') +
-        (!!tablet ? ' col-sm-' + tablet : '') +
-        (!!mobile ? ' col-xs-' + mobile : '') + '"><p>[insert text here]</p></div>';
+        (!!desktop ? ' col-lg-' + desktop : '') +
+        (!!tablet ? ' col-md-' + tablet : '') +
+        (!!mobile ? ' col-sm-' + mobile : '') + '"><p>[insert text here]</p></div>';
     }
 
     function shortcodeToHTML(content) {
