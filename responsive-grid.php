@@ -95,7 +95,7 @@ if ( ! function_exists( 'rg_translatable_strings' ) ) {
 		?>
 		<script type="text/javascript">
 			var rg_insert_grid = '<?php esc_html_e( 'Insert grid', 'responsive-grid' ); ?>';
-			var rg_num_cols = '<?php esc_html_e( '# of Columns', 'responsive-grid' ); ?>';
+			var rg_num_cols = '<?php esc_html_e( '# of grid blocks', 'responsive-grid' ); ?>';
 			var rg_desktop = '<?php esc_html_e( 'Desktop grid percentage', 'responsive-grid' ); ?>';
 			var rg_tablet = '<?php esc_html_e( 'Tablet grid percentage', 'responsive-grid' ); ?>';
 			var rg_mobile = '<?php esc_html_e( 'Mobile grid percentage', 'responsive-grid' ); ?>';
