@@ -56,7 +56,7 @@
     function shortcodeToHTML(content) {
       // Replace rows
       content = content.replace(/\[rg_row\]/g, '<div class="rg-grid"><div class="rg-row row">');
-      content = content.replace(/\[\/rg_row\]/g, '</div></div><!--.rg-grid-->');
+      content = content.replace(/\[\/rg_row\]/g, '</div></div><!--.rg-grid--><p>&nbsp;</p>');
 
       // Replace columns
       content = content.replace(/\[rg_column([^\]]*)\]/g, function(shortcodeStr) {
@@ -70,44 +70,9 @@
       return content;
     }
 
-    // function htmlToShortcode(content) {
-    //   function getAttr(str, name) {
-    //     name = new RegExp(name + '=\"([^\"]+)\"').exec(str);
-    //     return name ? window.decodeURIComponent(name[1]) : '';
-    //   }
-
-    //   // Find .rg-grid .rg-row and replace with [rg_row]
-    //   content = content.replace(/\<div class=\"rg-grid\"\>\<div class=\"rg-row row\"\>/g, '[rg_row]');
-    //   content = content.replace(/\<\/div\>\<\/div\>\<!--\.rg-grid--\>/g, '[/rg_row]');
-
-    //   // Find .rg-column, gather attributes, and store as shortcode
-    //   content = content.replace(/<div class="rg-column()">/)
-
-    //   return content.replace(/<div class="rg-column()">/g, function(match, gridCol) {
-    //     var data = getAttr(gridCol, 'desktop_grid');
-
-    //     if (data) {
-    //       return '<h3>' + data + '</h3>';
-    //     }
-
-    //     return match;
-    //   });
-    // }
-
     editor.on('BeforeSetContent', function(event) {
-      console.warn('BeforeSetContent');
-      console.log(event);
-
-      // if (!editor.plugins.wpview || typeof wp === 'undefined' || !wp.mce) {
-        event.content = shortcodeToHTML(event.content);
-      // }
+      event.content = shortcodeToHTML(event.content);
     });
-
-    // editor.on('PostProcess', function(event) {
-    //   if (event.get) {
-    //     event.content = htmlToShortcode(event.content);
-    //   }
-    // });
 
   });
 })();
