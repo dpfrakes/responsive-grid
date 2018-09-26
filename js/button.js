@@ -33,21 +33,11 @@
             name: 'mobile_grid',
             label: rg_mobile,
             values: colValues
-          }, {
-            type: 'listbox',
-            name: 'cell_padding',
-            label: rg_cell_padding,
-            values: [
-              {text: 'Small', value: 'small'},
-              {text: 'Medium', value: 'medium'},
-              {text: 'Large', value: 'large'},
-              {text: 'None', value: 'none'},
-            ]
           }],
           onsubmit: function(e) {
             htmlStr = '[rg_row]';
             for (var c = 0; c < parseInt(e.data.num_cols); c++) {
-              htmlStr += '[rg_column desktop_grid="' + e.data.desktop_grid + '" tablet_grid="' + e.data.tablet_grid + '" mobile_grid="' + e.data.mobile_grid + '" padding="' + e.data.cell_padding + '"]'
+              htmlStr += '[rg_column desktop_grid="' + e.data.desktop_grid + '" tablet_grid="' + e.data.tablet_grid + '" mobile_grid="' + e.data.mobile_grid + '"]'
             }
             htmlStr += '[/rg_row]';
             editor.insertContent(htmlStr);
@@ -56,12 +46,11 @@
       }
     });
 
-    function html(desktop, tablet, mobile, padding) {
+    function html(desktop, tablet, mobile) {
       return '<div class="rg-column' +
         (!!desktop ? ' col-lg-' + desktop : '') +
         (!!tablet ? ' col-md-' + tablet : '') +
-        (!!mobile ? ' col-sm-' + mobile : '') +
-        (!!padding ? ' rg-cell-padding-' + padding : '') + '"><p>&nbsp;</p></div>';
+        (!!mobile ? ' col-sm-' + mobile : '') + '"><p>&nbsp;</p></div>';
     }
 
     function shortcodeToHTML(content) {
@@ -74,8 +63,7 @@
         var desktop = shortcodeStr.match(/desktop_grid="([^"]*)"/)[1];
         var tablet = shortcodeStr.match(/tablet_grid="([^"]*)"/)[1];
         var mobile = shortcodeStr.match(/mobile_grid="([^"]*)"/)[1];
-        var padding = shortcodeStr.match(/padding="([^"]*)"/)[1];
-        return html(desktop, tablet, mobile, padding);
+        return html(desktop, tablet, mobile);
       });
 
       // Return final html
