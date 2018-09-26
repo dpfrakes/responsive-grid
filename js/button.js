@@ -50,7 +50,7 @@
       return '<div class="rg-column' +
         (!!desktop ? ' col-lg-' + desktop : '') +
         (!!tablet ? ' col-md-' + tablet : '') +
-        (!!mobile ? ' col-sm-' + mobile : '') + '"><p>[insert text here]</p></div>';
+        (!!mobile ? ' col-sm-' + mobile : '') + '"><p>&nbsp;</p></div>';
     }
 
     function shortcodeToHTML(content) {
