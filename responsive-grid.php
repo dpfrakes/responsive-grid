@@ -99,6 +99,7 @@ if ( ! function_exists( 'rg_translatable_strings' ) ) {
 			var rg_desktop = '<?php esc_html_e( 'Desktop grid percentage', 'responsive-grid' ); ?>';
 			var rg_tablet = '<?php esc_html_e( 'Tablet grid percentage', 'responsive-grid' ); ?>';
 			var rg_mobile = '<?php esc_html_e( 'Mobile grid percentage', 'responsive-grid' ); ?>';
+			var rg_cell_padding = '<?php esc_html_e( 'Cell padding', 'responsive-grid' ); ?>';
 		</script>
 		<?php
 	}
